@@ -1,12 +1,13 @@
 package com.example.stackoverflowusers
 
 import android.app.Application
+import com.example.stackoverflowusers.core.di.application.ApplicationComponent
 import com.example.stackoverflowusers.core.di.application.ApplicationModule
 import com.example.stackoverflowusers.core.di.application.DaggerApplicationComponent
 
 class MyApp : Application() {
 
-    private val myAppComponent by lazy {
+    val applicationComponent: ApplicationComponent by lazy {
         DaggerApplicationComponent
             .builder()
             .applicationModule(ApplicationModule())
@@ -15,6 +16,6 @@ class MyApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        myAppComponent.inject(this)
+        applicationComponent.inject(this)
     }
 }
