@@ -1,7 +1,9 @@
 package com.example.stackoverflowusers.core.viewmodel
 
+import com.example.stackoverflowusers.core.local.model.User
+
 class Result(
     val status: Status,
-//    val data: List<Post> = emptyList(),
+    val data: List<User> = emptyList(),
     val error: Throwable? = null
 )

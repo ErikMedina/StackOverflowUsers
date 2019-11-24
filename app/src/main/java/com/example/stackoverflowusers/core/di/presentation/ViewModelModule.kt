@@ -1,5 +1,6 @@
 package com.example.stackoverflowusers.core.di.presentation
 
+import com.example.stackoverflowusers.core.usecase.GetUsersUseCase
 import com.example.stackoverflowusers.core.viewmodel.ViewModelFactory
 import com.example.stackoverflowusers.feature.user.UserViewModel
 import dagger.Module
@@ -20,7 +21,7 @@ class ViewModelModule {
     }
 
     @Provides
-    fun providesUserViewModel(): UserViewModel {
-        return UserViewModel()
+    fun providesUserViewModel(getUsersUseCase: GetUsersUseCase): UserViewModel {
+        return UserViewModel(getUsersUseCase)
     }
 }

@@ -31,8 +31,10 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.core:core-ktx:1.0.2'
+    implementation "androidx.appcompat:appcompat:$lifecycle_version"
+    implementation "androidx.core:core-ktx:$lifecycle_version"
+    // Extensions such as ViewModelProviders
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     // Dagger
     // Note: I'm not going to use dagger-android since I don't think it contributes with a real
