@@ -1,16 +1,11 @@
 package com.example.stackoverflowusers
 
 import androidx.annotation.UiThread
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.stackoverflowusers.core.di.presentation.PresentationComponent
 import com.example.stackoverflowusers.core.di.presentation.PresentationModule
 
-/**
- * Activity declared as open so other activities can inherit from it
- *
- * It gives the PresentationComponent to its children so they can inject dependencies.
- */
-open class BaseActivity : AppCompatActivity() {
+open class BaseFragment : Fragment() {
 
     private var isInjectorUsed: Boolean = false
 
@@ -20,8 +15,9 @@ open class BaseActivity : AppCompatActivity() {
             throw RuntimeException("there is no need to use injector more than once")
         }
         isInjectorUsed = true
-        return getApplicationComponent().newPresentationComponent(PresentationModule(this))
+        return getApplicationComponent().newPresentationComponent(PresentationModule(activity))
+
     }
 
-    private fun getApplicationComponent() = (application as MyApp).applicationComponent
+    private fun getApplicationComponent() = (activity?.application as MyApp).applicationComponent
 }

@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.stackoverflowusers.BaseFragment
 import com.example.stackoverflowusers.R
 import com.example.stackoverflowusers.core.local.model.User
 import com.example.stackoverflowusers.core.viewmodel.Result
@@ -17,11 +17,13 @@ import com.example.stackoverflowusers.core.viewmodel.Status
 import com.example.stackoverflowusers.feature.user.adapter.UserAdapter
 import kotlinx.android.synthetic.main.fragment_user_list.*
 
-class UserListFragment : Fragment() {
+class UserListFragment : BaseFragment() {
 
     private lateinit var userViewModel: UserViewModel
     private lateinit var adapter: UserAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        getPresentationComponent().inject(this)
         super.onCreate(savedInstanceState)
 
         activity?.let {
@@ -77,15 +79,17 @@ class UserListFragment : Fragment() {
     }
 
     private fun initializeRecycler() {
-        adapter = UserAdapter(object : UserAdapter.OnUserClickListener {
-            override fun onUserClick(user: User) {
-                Log.d(TAG, "[onUserClick] user selected: ${user.displayName}")
+        activity?.let {// TODO: inject activity
+            adapter = UserAdapter(it, object : UserAdapter.OnUserClickListener {
+                override fun onUserClick(user: User) {
+                    Log.d(TAG, "[onUserClick] user selected: ${user.displayName}")
 //                postsViewModel.post = post
 //                (activity as PostsActivity).startPostDetailFragment()
-            }
-        })
-        recycler.adapter = adapter
-        recycler.layoutManager = LinearLayoutManager(activity)
+                }
+            })
+            recycler.adapter = adapter
+            recycler.layoutManager = LinearLayoutManager(activity)
+        }
     }
 
     companion object {

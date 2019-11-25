@@ -30,6 +30,7 @@ ext {
     logging_interceptor_version = '4.2.1'
     rxAndroid_version = '2.1.1'
     rxJava_version = '2.2.14'
+    glide_version = '4.10.0'
 }
 
 task clean(type: Delete) {

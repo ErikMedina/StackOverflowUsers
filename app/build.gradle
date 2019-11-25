@@ -56,7 +56,9 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     //Logging interceptor
     implementation "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version"
-
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
     testImplementation 'junit:junit:4.12'
     // 'mockito-inline' artifact demanded by Kotlin
     testImplementation 'org.mockito:mockito-core:2.28.2'

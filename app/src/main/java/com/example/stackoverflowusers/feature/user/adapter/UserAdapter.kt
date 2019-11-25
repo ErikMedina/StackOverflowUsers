@@ -1,15 +1,17 @@
 package com.example.stackoverflowusers.feature.user.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.stackoverflowusers.R
 import com.example.stackoverflowusers.core.local.model.User
 
-class UserAdapter(private val listener: OnUserClickListener) :
+class UserAdapter(private val context: Context, private val listener: OnUserClickListener) :
     RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
     interface OnUserClickListener {
@@ -47,6 +49,14 @@ class UserAdapter(private val listener: OnUserClickListener) :
             itemView.setOnClickListener {
                 listener.onUserClick(user)
             }
+            loadThumbnail(user.profileImage)
+        }
+
+        private fun loadThumbnail(url: String) {
+            Glide.with(context)
+                .load(url)
+                .placeholder(R.drawable.ic_launcher_background)
+                .into(profile)
         }
     }
 }
