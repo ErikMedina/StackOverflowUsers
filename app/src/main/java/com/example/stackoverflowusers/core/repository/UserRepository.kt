@@ -27,6 +27,11 @@ class UserRepository @Inject constructor(
     }
 
     fun retrieveUsers(): Single<List<User>> {
-        return Single.just(preferences.retrieveUsers())
+        val users = preferences.retrieveUsers()
+        return if (users == null) {
+            Single.error(Throwable())
+        } else {
+            Single.just(users)
+        }
     }
 }

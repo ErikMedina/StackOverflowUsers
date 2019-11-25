@@ -34,6 +34,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$lifecycle_version"
     implementation "androidx.core:core-ktx:$lifecycle_version"
     implementation "androidx.recyclerview:recyclerview:$lifecycle_version"
+    implementation "com.google.android.material:material:$material_version"
     // Extensions such as ViewModelProviders
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

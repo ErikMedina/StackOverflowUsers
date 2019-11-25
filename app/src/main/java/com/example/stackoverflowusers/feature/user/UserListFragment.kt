@@ -5,36 +5,40 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.stackoverflowusers.BaseFragment
 import com.example.stackoverflowusers.R
 import com.example.stackoverflowusers.core.local.model.User
+import com.example.stackoverflowusers.core.viewmodel.Error
+import com.example.stackoverflowusers.core.viewmodel.Error.Type.GENERAL_ERROR
+import com.example.stackoverflowusers.core.viewmodel.Error.Type.NO_USERS
 import com.example.stackoverflowusers.core.viewmodel.Result
 import com.example.stackoverflowusers.core.viewmodel.Status
 import com.example.stackoverflowusers.feature.user.adapter.UserAdapter
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_user_list.*
 import javax.inject.Inject
 
 class UserListFragment : BaseFragment() {
 
     @Inject
+    lateinit var fragmentActivity: FragmentActivity
+    @Inject
     lateinit var adapter: UserAdapter
 
-    private lateinit var userViewModel: UserViewModel
+    private lateinit var viewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getPresentationComponent().inject(this)
 
-        activity?.let {
-            // Shared ViewModel between Activity and Fragments
-            userViewModel = ViewModelProviders.of(it).get(UserViewModel::class.java)
-            userViewModel.result.observe(this,
-                Observer<Result> { result -> processResponse(result) })
-        }
+        // Shared ViewModel between Activity and Fragments
+        viewModel = ViewModelProviders.of(fragmentActivity).get(UserViewModel::class.java)
+        viewModel.result.observe(this,
+            Observer<Result> { result -> processResponse(result) })
     }
 
     override fun onCreateView(
@@ -49,9 +53,9 @@ class UserListFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recycler.adapter = adapter
-        recycler.layoutManager = LinearLayoutManager(activity)
+        recycler.layoutManager = LinearLayoutManager(fragmentActivity)
 
-        userViewModel.getUsers()
+        viewModel.getUsers()
     }
 
     private fun processResponse(result: Result) {
@@ -73,14 +77,14 @@ class UserListFragment : BaseFragment() {
         adapter.setUserViews(users)
     }
 
-    private fun renderErrorState(throwable: Throwable?) {
-        Log.e(TAG, throwable.toString())
+    private fun renderErrorState(error: Error?) {
+        when (error?.type) {
+            GENERAL_ERROR -> error.message = R.string.error_general
+            NO_USERS -> error.message = R.string.error_no_users
+        }
+        Log.e(TAG, error.toString())
         progressBar.visibility = View.GONE
-        Toast.makeText(
-            activity,
-            R.string.error_general,
-            Toast.LENGTH_SHORT
-        ).show()
+        Snackbar.make(requireView(), error!!.message, Snackbar.LENGTH_LONG).show()
     }
 
     companion object {

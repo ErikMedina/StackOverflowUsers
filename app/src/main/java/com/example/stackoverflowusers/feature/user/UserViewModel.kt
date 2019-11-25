@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.example.stackoverflowusers.core.usecase.GetUsersUseCase
 import com.example.stackoverflowusers.core.usecase.PersistUsersUseCase
 import com.example.stackoverflowusers.core.usecase.RetrieveUsersUseCase
+import com.example.stackoverflowusers.core.viewmodel.Error
 import com.example.stackoverflowusers.core.viewmodel.Result
 import com.example.stackoverflowusers.core.viewmodel.Status
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -26,18 +27,38 @@ class UserViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { result.value = Result(status = Status.LOADING) }
-            .doOnError {
-                retrieveUsersUseCase.execute()
-            }
             .subscribe(
                 { users ->
                     result.value = Result(status = Status.SUCCESS, data = users)
                     persistUsersUseCase.execute(users)
                 },
-                { throwable ->
-                    result.value = Result(status = Status.ERROR, error = throwable)
+                {
+                    disposables.add(retrieveUsersUseCase.execute()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe {
+                            result.value = Result(status = Status.LOADING)
+                        }
+                        .subscribe(
+                            { users ->
+                                result.value = Result(status = Status.SUCCESS, data = users)
+                                persistUsersUseCase.execute(users)
+                            },
+                            {
+                                result.value = Result(
+                                    status = Status.ERROR,
+                                    error = Error(Error.Type.NO_USERS)
+                                )
+                            }
+                        )
+                    )
                 }
             )
         )
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposables.clear()
     }
 }

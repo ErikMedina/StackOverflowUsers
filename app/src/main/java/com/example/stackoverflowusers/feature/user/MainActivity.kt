@@ -13,7 +13,7 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    private lateinit var userViewModel: UserViewModel
+    private lateinit var viewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Clients (in this case MainActivity) use Dagger component as injector to inject
@@ -23,15 +23,18 @@ class MainActivity : BaseActivity() {
         // The ViewModel is initialised in the parent (activity) but will be shared by the children
         // as well. That's one of the beauty of the ViewModel, share data among an activity and its
         // children (fragments)
-        userViewModel = ViewModelProviders.of(this, viewModelFactory)
+        viewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(UserViewModel::class.java)
         setContentView(R.layout.activity_main)
 
-        startUserListFragment()
+        startUserListFragment(savedInstanceState)
     }
 
-    private fun startUserListFragment() {
+    private fun startUserListFragment(savedInstanceState: Bundle?) {
         if (findViewById<FrameLayout>(R.id.fragment_container) != null) {
+            if (savedInstanceState != null) {
+                return
+            }
             val userListFragment = UserListFragment()
 
             // In case this activity was started with special instructions from an

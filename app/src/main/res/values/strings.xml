@@ -2,5 +2,6 @@
     <string name="app_name">StackOverflowUsers</string>
     <string name="label_username_colon">Username:</string>
     <string name="label_title_colon">Title:</string>
-    <string name="error_general">There was an error. Try later please.</string>
+    <string name="error_general">An error occurred</string>
+    <string name="error_no_users">No users to show</string>
 </resources>

@@ -31,6 +31,7 @@ ext {
     rxAndroid_version = '2.1.1'
     rxJava_version = '2.2.14'
     glide_version = '4.10.0'
+    material_version = '1.0.0'
 }
 
 task clean(type: Delete) {
