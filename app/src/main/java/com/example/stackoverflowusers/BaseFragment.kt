@@ -15,7 +15,7 @@ open class BaseFragment : Fragment() {
             throw RuntimeException("there is no need to use injector more than once")
         }
         isInjectorUsed = true
-        return getApplicationComponent().newPresentationComponent(PresentationModule(activity))
+        return getApplicationComponent().newPresentationComponent(PresentationModule(activity!!))
 
     }
 

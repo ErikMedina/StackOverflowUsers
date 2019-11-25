@@ -16,11 +16,14 @@ import com.example.stackoverflowusers.core.viewmodel.Result
 import com.example.stackoverflowusers.core.viewmodel.Status
 import com.example.stackoverflowusers.feature.user.adapter.UserAdapter
 import kotlinx.android.synthetic.main.fragment_user_list.*
+import javax.inject.Inject
 
 class UserListFragment : BaseFragment() {
 
+    @Inject
+    lateinit var adapter: UserAdapter
+
     private lateinit var userViewModel: UserViewModel
-    private lateinit var adapter: UserAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         getPresentationComponent().inject(this)
@@ -32,6 +35,23 @@ class UserListFragment : BaseFragment() {
             userViewModel.result.observe(this,
                 Observer<Result> { result -> processResponse(result) })
         }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_user_list, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recycler.adapter = adapter
+        recycler.layoutManager = LinearLayoutManager(activity)
+
+        userViewModel.getUsers()
     }
 
     private fun processResponse(result: Result) {
@@ -61,35 +81,6 @@ class UserListFragment : BaseFragment() {
             R.string.error_general,
             Toast.LENGTH_SHORT
         ).show()
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_user_list, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        initializeRecycler()
-        userViewModel.getUsers()
-    }
-
-    private fun initializeRecycler() {
-        activity?.let {// TODO: inject activity
-            adapter = UserAdapter(it, object : UserAdapter.OnUserClickListener {
-                override fun onUserClick(user: User) {
-                    Log.d(TAG, "[onUserClick] user selected: ${user.displayName}")
-//                postsViewModel.post = post
-//                (activity as PostsActivity).startPostDetailFragment()
-                }
-            })
-            recycler.adapter = adapter
-            recycler.layoutManager = LinearLayoutManager(activity)
-        }
     }
 
     companion object {
