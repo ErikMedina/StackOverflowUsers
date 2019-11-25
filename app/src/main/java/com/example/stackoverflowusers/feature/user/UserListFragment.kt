@@ -26,8 +26,8 @@ class UserListFragment : BaseFragment() {
     private lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        getPresentationComponent().inject(this)
         super.onCreate(savedInstanceState)
+        getPresentationComponent().inject(this)
 
         activity?.let {
             // Shared ViewModel between Activity and Fragments

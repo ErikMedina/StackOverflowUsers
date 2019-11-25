@@ -3,13 +3,19 @@ package com.example.stackoverflowusers.feature.user
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.stackoverflowusers.core.usecase.GetUsersUseCase
+import com.example.stackoverflowusers.core.usecase.PersistUsersUseCase
+import com.example.stackoverflowusers.core.usecase.RetrieveUsersUseCase
 import com.example.stackoverflowusers.core.viewmodel.Result
 import com.example.stackoverflowusers.core.viewmodel.Status
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class UserViewModel(private val getUsersUseCase: GetUsersUseCase) : ViewModel() {
+class UserViewModel(
+    private val getUsersUseCase: GetUsersUseCase,
+    private val persistUsersUseCase: PersistUsersUseCase,
+    private val retrieveUsersUseCase: RetrieveUsersUseCase
+) : ViewModel() {
 
     private val disposables = CompositeDisposable()
 
@@ -20,9 +26,13 @@ class UserViewModel(private val getUsersUseCase: GetUsersUseCase) : ViewModel() 
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { result.value = Result(status = Status.LOADING) }
+            .doOnError {
+                retrieveUsersUseCase.execute()
+            }
             .subscribe(
                 { users ->
                     result.value = Result(status = Status.SUCCESS, data = users)
+                    persistUsersUseCase.execute(users)
                 },
                 { throwable ->
                     result.value = Result(status = Status.ERROR, error = throwable)
