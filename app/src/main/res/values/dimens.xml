@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="width_button">90dp</dimen>
+    <dimen name="button_text_size">10sp</dimen>
+    <dimen name="text_big_size">16sp</dimen>
+    <dimen name="profile_image_width_big">80dp</dimen>
+</resources>

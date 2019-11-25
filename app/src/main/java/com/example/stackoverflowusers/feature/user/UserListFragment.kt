@@ -1,18 +1,26 @@
 package com.example.stackoverflowusers.feature.user
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.stackoverflowusers.R
+import com.example.stackoverflowusers.core.local.model.User
 import com.example.stackoverflowusers.core.viewmodel.Result
+import com.example.stackoverflowusers.core.viewmodel.Status
+import com.example.stackoverflowusers.feature.user.adapter.UserAdapter
+import kotlinx.android.synthetic.main.fragment_user_list.*
 
 class UserListFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
+    private lateinit var adapter: UserAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -25,7 +33,32 @@ class UserListFragment : Fragment() {
     }
 
     private fun processResponse(result: Result) {
+        when (result.status) {
+            Status.LOADING -> renderLoadingState()
 
+            Status.SUCCESS -> renderDataState(result.data)
+
+            Status.ERROR -> renderErrorState(result.error)
+        }
+    }
+
+    private fun renderLoadingState() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    private fun renderDataState(users: List<User>) {
+        progressBar.visibility = View.GONE
+        adapter.setUserViews(users)
+    }
+
+    private fun renderErrorState(throwable: Throwable?) {
+        Log.e(TAG, throwable.toString())
+        progressBar.visibility = View.GONE
+        Toast.makeText(
+            activity,
+            R.string.error_general,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun onCreateView(
@@ -39,7 +72,23 @@ class UserListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        initializeRecycler()
+        initializeRecycler()
         userViewModel.getUsers()
+    }
+
+    private fun initializeRecycler() {
+        adapter = UserAdapter(object : UserAdapter.OnUserClickListener {
+            override fun onUserClick(user: User) {
+                Log.d(TAG, "[onUserClick] user selected: ${user.displayName}")
+//                postsViewModel.post = post
+//                (activity as PostsActivity).startPostDetailFragment()
+            }
+        })
+        recycler.adapter = adapter
+        recycler.layoutManager = LinearLayoutManager(activity)
+    }
+
+    companion object {
+        private const val TAG = "UserListFragment"
     }
 }
