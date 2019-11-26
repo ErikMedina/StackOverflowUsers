@@ -12,8 +12,9 @@ import com.example.stackoverflowusers.core.viewmodel.Status
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class UserViewModel(
+class UserViewModel @Inject constructor(
     private val getUsersUseCase: GetUsersUseCase,
     private val persistUsersUseCase: PersistUsersUseCase,
     private val retrieveUsersUseCase: RetrieveUsersUseCase
@@ -30,31 +31,14 @@ class UserViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { result.value = Result(status = Status.LOADING) }
+            .onErrorResumeNext(retrieveUsersUseCase.execute())
             .subscribe(
                 { users ->
                     result.value = Result(status = Status.SUCCESS, data = users)
                     persistUsersUseCase.execute(users)
                 },
                 {
-                    disposables.add(retrieveUsersUseCase.execute()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnSubscribe {
-                            result.value = Result(status = Status.LOADING)
-                        }
-                        .subscribe(
-                            { users ->
-                                result.value = Result(status = Status.SUCCESS, data = users)
-                                persistUsersUseCase.execute(users)
-                            },
-                            {
-                                result.value = Result(
-                                    status = Status.ERROR,
-                                    error = Error(Error.Type.NO_USERS)
-                                )
-                            }
-                        )
-                    )
+                    result.value = Result(status = Status.ERROR, error = Error(Error.Type.NO_USERS))
                 }
             )
         )

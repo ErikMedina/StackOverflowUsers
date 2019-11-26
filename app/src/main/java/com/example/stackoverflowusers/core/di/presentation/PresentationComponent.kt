@@ -5,7 +5,7 @@ import com.example.stackoverflowusers.feature.user.UserDetailFragment
 import com.example.stackoverflowusers.feature.user.UserListFragment
 import dagger.Subcomponent
 
-@Subcomponent(modules = [PresentationModule::class, ViewModelModule::class])
+@Subcomponent(modules = [PresentationModule::class])
 interface PresentationComponent {
 
     fun inject(mainActivity: MainActivity)
