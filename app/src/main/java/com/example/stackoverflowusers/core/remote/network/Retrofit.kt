@@ -1,4 +1,4 @@
-package com.example.stackoverflowusers.core.network
+package com.example.stackoverflowusers.core.remote.network
 
 import com.example.stackoverflowusers.BuildConfig
 import okhttp3.OkHttpClient

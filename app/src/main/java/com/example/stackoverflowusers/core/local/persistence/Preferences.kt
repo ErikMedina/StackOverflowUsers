@@ -7,7 +7,9 @@ import com.example.stackoverflowusers.core.local.model.User
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class Preferences @Inject constructor(myApp: MyApp, private val gson: Gson) {
 
     private var preferences: SharedPreferences
