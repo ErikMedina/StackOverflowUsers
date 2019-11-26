@@ -2,8 +2,6 @@ package com.example.stackoverflowusers.core.di.presentation
 
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
-import com.example.stackoverflowusers.feature.user.adapter.OnUserClickListener
-import com.example.stackoverflowusers.feature.user.adapter.OnUserClickListenerImpl
 import dagger.Module
 import dagger.Provides
 
@@ -22,10 +20,5 @@ class PresentationModule(private val activity: FragmentActivity) {
     @Provides
     internal fun provideContext(activity: FragmentActivity): Context {
         return activity
-    }
-
-    @Provides
-    internal fun provideOnUserClickListener(): OnUserClickListener {
-        return OnUserClickListenerImpl()
     }
 }

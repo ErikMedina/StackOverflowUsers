@@ -4,4 +4,6 @@
     <string name="label_title_colon">Title:</string>
     <string name="error_general">An error occurred</string>
     <string name="error_no_users">No users to show</string>
+    <string name="label_reputation">Reputation:</string>
+    <string name="label_user_id">UserId:</string>
 </resources>

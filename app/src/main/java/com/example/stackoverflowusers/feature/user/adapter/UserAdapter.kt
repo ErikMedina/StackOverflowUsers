@@ -11,12 +11,12 @@ import com.example.stackoverflowusers.core.image.ImageLoader
 import com.example.stackoverflowusers.core.local.model.User
 import javax.inject.Inject
 
-class UserAdapter @Inject constructor(
-    private val imageLoader: ImageLoader,
-    private val listener: OnUserClickListener
-) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+class UserAdapter @Inject constructor(private val imageLoader: ImageLoader) :
+    RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
     private var userViews = emptyList<User>()
+
+    internal var userListener: (User) -> Unit = { _ -> }
 
     override fun getItemCount() = userViews.size
 
@@ -42,7 +42,7 @@ class UserAdapter @Inject constructor(
 
         fun bind(user: User) {
             itemView.setOnClickListener {
-                listener.onUserClick(user)
+                userListener(user)
             }
             imageLoader.loadThumbnail(profile, user.profileImage)
             name.text = user.displayName

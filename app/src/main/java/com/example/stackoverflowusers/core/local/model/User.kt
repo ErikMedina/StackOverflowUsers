@@ -4,5 +4,5 @@ data class User(
     val userId: Int,
     val displayName: String,
     val profileImage: String,
-    val age: Int
+    val reputation: Int
 )

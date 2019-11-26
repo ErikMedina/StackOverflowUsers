@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.stackoverflowusers.BaseFragment
 import com.example.stackoverflowusers.R
 import com.example.stackoverflowusers.core.local.model.User
+import com.example.stackoverflowusers.core.navigation.Navigator
 import com.example.stackoverflowusers.core.viewmodel.Error
 import com.example.stackoverflowusers.core.viewmodel.Error.Type.GENERAL_ERROR
 import com.example.stackoverflowusers.core.viewmodel.Error.Type.NO_USERS
@@ -28,6 +29,8 @@ class UserListFragment : BaseFragment() {
     lateinit var fragmentActivity: FragmentActivity
     @Inject
     lateinit var adapter: UserAdapter
+    @Inject
+    lateinit var navigator: Navigator
 
     private lateinit var viewModel: UserViewModel
 
@@ -54,6 +57,10 @@ class UserListFragment : BaseFragment() {
 
         recycler.adapter = adapter
         recycler.layoutManager = LinearLayoutManager(fragmentActivity)
+        adapter.userListener = {
+            viewModel.user = it
+        navigator.startPostDetailFragment()
+        }
 
         viewModel.getUsers()
     }

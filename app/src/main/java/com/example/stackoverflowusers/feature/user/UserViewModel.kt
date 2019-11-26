@@ -2,6 +2,7 @@ package com.example.stackoverflowusers.feature.user
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.stackoverflowusers.core.local.model.User
 import com.example.stackoverflowusers.core.usecase.GetUsersUseCase
 import com.example.stackoverflowusers.core.usecase.PersistUsersUseCase
 import com.example.stackoverflowusers.core.usecase.RetrieveUsersUseCase
@@ -18,9 +19,11 @@ class UserViewModel(
     private val retrieveUsersUseCase: RetrieveUsersUseCase
 ) : ViewModel() {
 
-    private val disposables = CompositeDisposable()
+    var user: User? = null
 
     val result = MutableLiveData<Result>()
+
+    private val disposables = CompositeDisposable()
 
     fun getUsers() {
         disposables.add(getUsersUseCase.execute()
