@@ -28,8 +28,8 @@ class UserRepository @Inject constructor(
         preferences.persistUsers(users)
     }
 
-    fun retrieveUsers(): Single<List<User>> {
-        val users = preferences.retrieveUsers()
+    fun getUsersLocally(): Single<List<User>> {
+        val users = preferences.getUsers()
         return if (users == null) {
             Single.error(Throwable())
         } else {

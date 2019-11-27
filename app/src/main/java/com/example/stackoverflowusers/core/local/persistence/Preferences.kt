@@ -21,7 +21,7 @@ class Preferences @Inject constructor(myApp: MyApp, private val gson: Gson) {
         this.editor = preferences.edit()
     }
 
-    fun retrieveUsers(): List<User>? {
+    fun getUsers(): List<User>? {
         val json = preferences.getString(KEY_USERS, "")
         val type = object : TypeToken<List<User>>() {}.type
         return gson.fromJson(json, type)

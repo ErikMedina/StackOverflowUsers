@@ -61,9 +61,12 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glide_version"
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
     testImplementation 'junit:junit:4.12'
+    // Needed for testing LiveData
+    testImplementation "android.arch.core:core-testing:1.1.1"
     // 'mockito-inline' artifact demanded by Kotlin
     testImplementation 'org.mockito:mockito-core:2.28.2'
     testImplementation 'org.mockito:mockito-inline:2.13.0'
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }

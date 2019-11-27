@@ -3,9 +3,9 @@ package com.example.stackoverflowusers.feature.user
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.stackoverflowusers.core.local.model.User
+import com.example.stackoverflowusers.core.usecase.GetUsersLocallyUseCase
 import com.example.stackoverflowusers.core.usecase.GetUsersUseCase
 import com.example.stackoverflowusers.core.usecase.PersistUsersUseCase
-import com.example.stackoverflowusers.core.usecase.RetrieveUsersUseCase
 import com.example.stackoverflowusers.core.viewmodel.Error
 import com.example.stackoverflowusers.core.viewmodel.Result
 import com.example.stackoverflowusers.core.viewmodel.Status
@@ -17,7 +17,7 @@ import javax.inject.Inject
 class UserViewModel @Inject constructor(
     private val getUsersUseCase: GetUsersUseCase,
     private val persistUsersUseCase: PersistUsersUseCase,
-    private val retrieveUsersUseCase: RetrieveUsersUseCase
+    private val getUsersLocallyUseCase: GetUsersLocallyUseCase
 ) : ViewModel() {
 
     var user: User? = null
@@ -31,7 +31,7 @@ class UserViewModel @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { result.value = Result(status = Status.LOADING) }
-            .onErrorResumeNext(retrieveUsersUseCase.execute())
+            .onErrorResumeNext { getUsersLocallyUseCase.execute() } //replaces the current stream with an entirely new Observable
             .subscribe(
                 { users ->
                     result.value = Result(status = Status.SUCCESS, data = users)

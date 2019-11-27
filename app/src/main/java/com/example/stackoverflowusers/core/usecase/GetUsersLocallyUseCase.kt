@@ -7,9 +7,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RetrieveUsersUseCase @Inject constructor(private val userRepository: UserRepository) {
+class GetUsersLocallyUseCase @Inject constructor(private val userRepository: UserRepository) {
 
     fun execute(): Single<List<User>> {
-        return userRepository.retrieveUsers()
+        return userRepository.getUsersLocally()
     }
 }
