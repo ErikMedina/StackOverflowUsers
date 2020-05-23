@@ -3,6 +3,7 @@ package com.example.stackoverflowusers.core.local.persistence
 import android.app.Activity
 import android.content.SharedPreferences
 import com.example.stackoverflowusers.MyApp
+import com.example.stackoverflowusers.core.local.Storage
 import com.example.stackoverflowusers.core.local.model.User
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -10,7 +11,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class Preferences @Inject constructor(myApp: MyApp, private val gson: Gson) {
+class PreferencesStorage @Inject constructor(myApp: MyApp, private val gson: Gson) : Storage {
 
     private var preferences: SharedPreferences
     private var editor: SharedPreferences.Editor
@@ -21,13 +22,13 @@ class Preferences @Inject constructor(myApp: MyApp, private val gson: Gson) {
         this.editor = preferences.edit()
     }
 
-    fun getUsers(): List<User>? {
+    override fun getUsers(): List<User> {//TODO: return empty list if there are no stored users
         val json = preferences.getString(KEY_USERS, "")
         val type = object : TypeToken<List<User>>() {}.type
         return gson.fromJson(json, type)
     }
 
-    fun persistUsers(users: List<User>) {
+    override fun persistUsers(users: List<User>) {
         val json = gson.toJson(users)
         editor.putString(KEY_USERS, json)
         editor.apply()

@@ -1,6 +1,7 @@
 package com.example.stackoverflowusers.core.di.application
 
 import com.example.stackoverflowusers.MyApp
+import com.example.stackoverflowusers.core.di.StorageModule
 import com.example.stackoverflowusers.core.di.presentation.PresentationComponent
 import com.example.stackoverflowusers.core.di.presentation.PresentationModule
 import dagger.Component
@@ -11,7 +12,7 @@ import javax.inject.Singleton
  * scope ApplicationComponent as well
  */
 @Singleton
-@Component(modules = [ApplicationModule::class])
+@Component(modules = [ApplicationModule::class, StorageModule::class])
 interface ApplicationComponent {
 
     fun inject(myApp: MyApp)
