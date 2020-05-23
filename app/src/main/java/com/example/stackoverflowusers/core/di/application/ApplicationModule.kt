@@ -1,6 +1,5 @@
 package com.example.stackoverflowusers.core.di.application
 
-import com.example.stackoverflowusers.MyApp
 import com.example.stackoverflowusers.core.remote.network.ApiRest
 import com.example.stackoverflowusers.core.remote.network.Retrofit
 import com.google.gson.Gson
@@ -9,12 +8,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class ApplicationModule(private val myApp: MyApp) {
-
-    @Provides
-    internal fun provideApplication(): MyApp {
-        return myApp
-    }
+class ApplicationModule {
 
     @Singleton
     @Provides

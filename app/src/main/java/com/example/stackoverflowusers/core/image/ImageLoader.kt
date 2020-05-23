@@ -6,10 +6,10 @@ import com.bumptech.glide.Glide
 import com.example.stackoverflowusers.R
 import javax.inject.Inject
 
-class ImageLoader @Inject constructor(private val context: Context) {
+class ImageLoader @Inject constructor(private val applicationContext: Context) {//TODO: pass FragmentActivity, not Application context
 
     fun loadThumbnail(profile: ImageView, url: String) {
-        Glide.with(context)
+        Glide.with(applicationContext)
             .load(url)
             .placeholder(R.drawable.ic_launcher_background)
             .into(profile)

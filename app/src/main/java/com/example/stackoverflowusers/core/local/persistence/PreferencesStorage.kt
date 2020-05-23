@@ -1,8 +1,8 @@
 package com.example.stackoverflowusers.core.local.persistence
 
 import android.app.Activity
+import android.content.Context
 import android.content.SharedPreferences
-import com.example.stackoverflowusers.MyApp
 import com.example.stackoverflowusers.core.local.Storage
 import com.example.stackoverflowusers.core.local.model.User
 import com.google.gson.Gson
@@ -11,14 +11,14 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PreferencesStorage @Inject constructor(myApp: MyApp, private val gson: Gson) : Storage {
+class PreferencesStorage @Inject constructor(applicationContext: Context, private val gson: Gson) : Storage {
 
     private var preferences: SharedPreferences
     private var editor: SharedPreferences.Editor
 
     init {
         this.preferences =
-            myApp.getSharedPreferences(PREFERENCES_NAME, Activity.MODE_PRIVATE)
+            applicationContext.getSharedPreferences(PREFERENCES_NAME, Activity.MODE_PRIVATE)
         this.editor = preferences.edit()
     }
 

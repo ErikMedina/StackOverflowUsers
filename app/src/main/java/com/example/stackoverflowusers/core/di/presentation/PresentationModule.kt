@@ -7,7 +7,7 @@ import dagger.Provides
 
 @Module
 class PresentationModule(private val activity: FragmentActivity) {
-
+//TODO: is it possible to substitute @Provides with @Binds?
     @Provides
     internal fun provideActivity(): FragmentActivity {
         return activity
@@ -17,8 +17,8 @@ class PresentationModule(private val activity: FragmentActivity) {
      * This function provides the enclosing activity as Context so we ensure that we're using
      * always the correct context (current Activity) and avoid memory leaks
      */
-    @Provides
-    internal fun provideContext(activity: FragmentActivity): Context {
-        return activity
-    }
+//    @Provides
+//    internal fun provideContext(activity: FragmentActivity): Context {
+//        return activity
+//    }
 }

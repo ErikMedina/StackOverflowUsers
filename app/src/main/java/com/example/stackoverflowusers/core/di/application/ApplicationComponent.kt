@@ -1,9 +1,11 @@
 package com.example.stackoverflowusers.core.di.application
 
+import android.content.Context
 import com.example.stackoverflowusers.MyApp
 import com.example.stackoverflowusers.core.di.StorageModule
 import com.example.stackoverflowusers.core.di.presentation.PresentationComponent
 import com.example.stackoverflowusers.core.di.presentation.PresentationModule
+import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
@@ -14,6 +16,13 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [ApplicationModule::class, StorageModule::class])
 interface ApplicationComponent {
+
+    // Factory to create instances of the AppComponent
+    @Component.Factory
+    interface Factory {
+        // With @BindsInstance, the Context passed in will be available in the graph
+        fun create(@BindsInstance context: Context): ApplicationComponent
+    }
 
     fun inject(myApp: MyApp)
 
