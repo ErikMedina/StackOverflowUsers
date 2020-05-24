@@ -3,8 +3,8 @@ package com.example.stackoverflowusers.core.di.application
 import android.content.Context
 import com.example.stackoverflowusers.MyApp
 import com.example.stackoverflowusers.core.di.ApplicationSubcomponents
+import com.example.stackoverflowusers.core.di.BaseComponent
 import com.example.stackoverflowusers.core.di.StorageModule
-import com.example.stackoverflowusers.core.di.presentation.PresentationComponent
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -37,5 +37,5 @@ interface ApplicationComponent {
      */
 //    fun newPresentationComponent(presentationModule: PresentationModule): PresentationComponent
 
-    fun presentationComponent(): PresentationComponent.Factory
+    fun baseComponent(): BaseComponent.Factory
 }

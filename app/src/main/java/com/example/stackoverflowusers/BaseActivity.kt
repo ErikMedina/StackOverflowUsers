@@ -2,7 +2,7 @@ package com.example.stackoverflowusers
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.stackoverflowusers.core.di.presentation.PresentationComponent
+import com.example.stackoverflowusers.core.di.BaseComponent
 
 /**
  * Activity declared as open so other activities can inherit from it
@@ -12,12 +12,11 @@ import com.example.stackoverflowusers.core.di.presentation.PresentationComponent
 open class BaseActivity : AppCompatActivity() {
 
     private var isInjectorUsed: Boolean = false
-    lateinit var presentationComponent: PresentationComponent
+    lateinit var baseComponent: BaseComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // TODO: I might need a component which contains dependencies common to all activities
-        presentationComponent =
-            (application as MyApp).applicationComponent.presentationComponent().create(this)
+        baseComponent = (application as MyApp).applicationComponent.baseComponent().create(this)
         super.onCreate(savedInstanceState)
     }
 
