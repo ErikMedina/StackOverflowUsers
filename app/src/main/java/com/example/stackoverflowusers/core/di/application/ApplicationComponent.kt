@@ -2,9 +2,9 @@ package com.example.stackoverflowusers.core.di.application
 
 import android.content.Context
 import com.example.stackoverflowusers.MyApp
+import com.example.stackoverflowusers.core.di.ApplicationSubcomponents
 import com.example.stackoverflowusers.core.di.StorageModule
 import com.example.stackoverflowusers.core.di.presentation.PresentationComponent
-import com.example.stackoverflowusers.core.di.presentation.PresentationModule
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -15,7 +15,7 @@ import javax.inject.Singleton
  * with @Singleton are scoped to its lifetime (app's lifecycle).
  */
 @Singleton
-@Component(modules = [ApplicationModule::class, StorageModule::class])
+@Component(modules = [ApplicationModule::class, StorageModule::class, ApplicationSubcomponents::class])
 interface ApplicationComponent {
 
     // Factory to create instances of the AppComponent
@@ -35,5 +35,7 @@ interface ApplicationComponent {
      *
      * Then, this function ties the relationship between PresentationComponent and MyAppComponent.
      */
-    fun newPresentationComponent(presentationModule: PresentationModule): PresentationComponent
+//    fun newPresentationComponent(presentationModule: PresentationModule): PresentationComponent
+
+    fun presentationComponent(): PresentationComponent.Factory
 }

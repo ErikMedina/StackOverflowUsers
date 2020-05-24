@@ -6,14 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.stackoverflowusers.BaseFragment
 import com.example.stackoverflowusers.R
 import com.example.stackoverflowusers.core.local.model.User
-import com.example.stackoverflowusers.core.navigation.Navigator
 import com.example.stackoverflowusers.core.viewmodel.Error
 import com.example.stackoverflowusers.core.viewmodel.Error.Type.GENERAL_ERROR
 import com.example.stackoverflowusers.core.viewmodel.Error.Type.NO_USERS
@@ -26,28 +24,29 @@ import javax.inject.Inject
 
 class UserListFragment : BaseFragment() {
 
-    @Inject
-    lateinit var fragmentActivity: FragmentActivity
+//    @Inject TODO: let's see if we can inject FragmentActivity
+//    lateinit var fragmentActivity: FragmentActivity
 
     @Inject
     lateinit var adapter: UserAdapter
 
-    @Inject
-    lateinit var navigator: Navigator
+//    @Inject TODO: navigator needs activity context
+//    lateinit var navigator: Navigator
 
     private lateinit var viewModel: UserViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        getPresentationComponent().inject(this)
+        (activity as MainActivity).presentationComponent.inject(this)
+//        getPresentationComponent().inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Shared ViewModel between Activity and Fragments
-        viewModel = ViewModelProviders.of(fragmentActivity).get(UserViewModel::class.java)
+        viewModel = ViewModelProviders.of(requireActivity()).get(UserViewModel::class.java)
         viewModel.result.observe(this,
             Observer<Result> { result -> processResponse(result) })
     }
@@ -64,10 +63,10 @@ class UserListFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recycler.adapter = adapter
-        recycler.layoutManager = LinearLayoutManager(fragmentActivity)
+        recycler.layoutManager = LinearLayoutManager(requireActivity())
         adapter.userListener = {
             viewModel.user = it
-            navigator.startPostDetailFragment()
+//            navigator.startPostDetailFragment()
         }
 
         viewModel.getUsers()

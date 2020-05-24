@@ -9,15 +9,15 @@ open class BaseFragment : Fragment() {
 
     private var isInjectorUsed: Boolean = false
 
-    @UiThread
-    protected fun getPresentationComponent(): PresentationComponent {
-        if (isInjectorUsed) {
-            throw RuntimeException("there is no need to use injector more than once")
-        }
-        isInjectorUsed = true
-        return getApplicationComponent().newPresentationComponent(PresentationModule(activity!!))
-
-    }
+//    @UiThread
+//    protected fun getPresentationComponent(): PresentationComponent {
+//        if (isInjectorUsed) {
+//            throw RuntimeException("there is no need to use injector more than once")
+//        }
+//        isInjectorUsed = true
+//        return getApplicationComponent().newPresentationComponent(PresentationModule(activity!!))
+//
+//    }
 
     private fun getApplicationComponent() = (activity?.application as MyApp).applicationComponent
 }

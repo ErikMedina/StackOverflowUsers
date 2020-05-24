@@ -15,8 +15,8 @@ import javax.inject.Inject
 
 class UserDetailFragment : BaseFragment() {
 
-    @Inject
-    lateinit var fragmentActivity: FragmentActivity
+//    @Inject TODO: let's see if we can inject FragmentActivity
+//    lateinit var fragmentActivity: FragmentActivity
 
     @Inject
     lateinit var imageLoader: ImageLoader
@@ -26,14 +26,15 @@ class UserDetailFragment : BaseFragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        getPresentationComponent().inject(this)
+        (activity as MainActivity).presentationComponent.inject(this)
+//        getPresentationComponent().inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Shared ViewModel between Activity and Fragments
-        viewModel = ViewModelProviders.of(fragmentActivity).get(UserViewModel::class.java)
+        viewModel = ViewModelProviders.of(requireActivity()).get(UserViewModel::class.java)
     }
 
     override fun onCreateView(

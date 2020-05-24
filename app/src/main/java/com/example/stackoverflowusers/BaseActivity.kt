@@ -14,14 +14,14 @@ open class BaseActivity : AppCompatActivity() {
 
     private var isInjectorUsed: Boolean = false
 
-    @UiThread
-    protected fun getPresentationComponent(): PresentationComponent {
-        if (isInjectorUsed) {
-            throw RuntimeException("there is no need to use injector more than once")
-        }
-        isInjectorUsed = true
-        return getApplicationComponent().newPresentationComponent(PresentationModule(this))
-    }
+//    @UiThread
+//    protected fun getPresentationComponent(): PresentationComponent {
+//        if (isInjectorUsed) {
+//            throw RuntimeException("there is no need to use injector more than once")
+//        }
+//        isInjectorUsed = true
+//        return getApplicationComponent().newPresentationComponent(PresentationModule(this))
+//    }
 
     private fun getApplicationComponent() = (application as MyApp).applicationComponent
 }

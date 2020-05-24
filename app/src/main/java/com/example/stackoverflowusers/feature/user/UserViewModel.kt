@@ -2,6 +2,7 @@ package com.example.stackoverflowusers.feature.user
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.stackoverflowusers.core.di.ActivityScope
 import com.example.stackoverflowusers.core.local.model.User
 import com.example.stackoverflowusers.core.usecase.GetUsersLocallyUseCase
 import com.example.stackoverflowusers.core.usecase.GetUsersUseCase
@@ -14,6 +15,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
+@ActivityScope
 class UserViewModel @Inject constructor(
     private val getUsersUseCase: GetUsersUseCase,
     private val persistUsersUseCase: PersistUsersUseCase,
