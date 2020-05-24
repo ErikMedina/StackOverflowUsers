@@ -1,5 +1,6 @@
 package com.example.stackoverflowusers.feature.user
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,14 +17,20 @@ class UserDetailFragment : BaseFragment() {
 
     @Inject
     lateinit var fragmentActivity: FragmentActivity
+
     @Inject
     lateinit var imageLoader: ImageLoader
 
     private lateinit var viewModel: UserViewModel
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        getPresentationComponent().inject(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getPresentationComponent().inject(this)
 
         // Shared ViewModel between Activity and Fragments
         viewModel = ViewModelProviders.of(fragmentActivity).get(UserViewModel::class.java)

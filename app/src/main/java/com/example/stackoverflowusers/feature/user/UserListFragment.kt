@@ -1,5 +1,6 @@
 package com.example.stackoverflowusers.feature.user
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -27,16 +28,23 @@ class UserListFragment : BaseFragment() {
 
     @Inject
     lateinit var fragmentActivity: FragmentActivity
+
     @Inject
     lateinit var adapter: UserAdapter
+
     @Inject
     lateinit var navigator: Navigator
 
     private lateinit var viewModel: UserViewModel
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        getPresentationComponent().inject(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getPresentationComponent().inject(this)
 
         // Shared ViewModel between Activity and Fragments
         viewModel = ViewModelProviders.of(fragmentActivity).get(UserViewModel::class.java)
@@ -59,7 +67,7 @@ class UserListFragment : BaseFragment() {
         recycler.layoutManager = LinearLayoutManager(fragmentActivity)
         adapter.userListener = {
             viewModel.user = it
-        navigator.startPostDetailFragment()
+            navigator.startPostDetailFragment()
         }
 
         viewModel.getUsers()

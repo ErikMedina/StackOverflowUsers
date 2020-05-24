@@ -10,8 +10,9 @@ import dagger.Component
 import javax.inject.Singleton
 
 /**
- * Since in ApplicationModule there're dependencies scoped (have @Singleton annotation), we have to
- * scope ApplicationComponent as well
+ * ApplicationComponent is the component that holds the graph that will be attached to the app's
+ * lifecycle. We annotate this component with @Singleton because we want that the classes annotated
+ * with @Singleton are scoped to its lifetime (app's lifecycle).
  */
 @Singleton
 @Component(modules = [ApplicationModule::class, StorageModule::class])
@@ -21,7 +22,7 @@ interface ApplicationComponent {
     @Component.Factory
     interface Factory {
         // With @BindsInstance, the Context passed in will be available in the graph
-        fun create(@BindsInstance context: Context): ApplicationComponent
+        fun create(@BindsInstance applicationContext: Context): ApplicationComponent
     }
 
     fun inject(myApp: MyApp)

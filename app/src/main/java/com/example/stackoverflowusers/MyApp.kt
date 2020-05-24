@@ -14,6 +14,6 @@ class MyApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        applicationComponent.inject(this)
+//        applicationComponent.inject(this) TODO: is it still necessary?
     }
 }
