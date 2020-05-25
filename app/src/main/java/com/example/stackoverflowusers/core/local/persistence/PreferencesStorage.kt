@@ -11,7 +11,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PreferencesStorage @Inject constructor(applicationContext: Context, private val gson: Gson) : Storage {
+class PreferencesStorage @Inject constructor(
+    applicationContext: Context,
+    private val gson: Gson
+) : Storage {
 
     private var preferences: SharedPreferences
     private var editor: SharedPreferences.Editor

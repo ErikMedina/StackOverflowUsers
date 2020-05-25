@@ -5,10 +5,9 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.example.stackoverflowusers.R
 import javax.inject.Inject
+import javax.inject.Singleton
 
-/**
- * It's not necessary to scope this class since its interface is already scoped.
- */
+@Singleton
 class GlideLoader @Inject constructor() : ImageLoader {
 
     override fun loadThumbnail(context: Context, target: ImageView, url: String) {
