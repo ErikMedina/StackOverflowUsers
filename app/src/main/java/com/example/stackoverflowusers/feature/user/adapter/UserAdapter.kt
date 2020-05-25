@@ -44,7 +44,7 @@ class UserAdapter @Inject constructor(private val imageLoader: ImageLoader) :
             itemView.setOnClickListener {
                 userListener(user)
             }
-            imageLoader.loadThumbnail(profile, user.profileImage)
+            imageLoader.loadThumbnail(itemView.context, profile, user.profileImage)
             name.text = user.displayName
             userId.text = user.userId.toString()
         }

@@ -25,9 +25,6 @@ import javax.inject.Inject
 
 class UserListFragment : BaseFragment() {
 
-//    @Inject TODO: let's see if we can inject FragmentActivity
-//    lateinit var fragmentActivity: FragmentActivity
-
     @Inject
     lateinit var adapter: UserAdapter
 
@@ -66,7 +63,7 @@ class UserListFragment : BaseFragment() {
         recycler.layoutManager = LinearLayoutManager(requireActivity())
         adapter.userListener = {
             viewModel.user = it
-            navigator.startPostDetailFragment()
+            navigator.startPostDetailFragment(requireActivity())
         }
 
         viewModel.getUsers()

@@ -47,7 +47,7 @@ class UserDetailFragment : BaseFragment() {
 
     private fun processUser() {
         viewModel.user?.run {
-            imageLoader.loadThumbnail(ivProfile, profileImage)
+            imageLoader.loadThumbnail(requireContext(), ivProfile, profileImage)
             tvName.text = displayName
             tvUserId.text = userId.toString()
             tvReputation.text = reputation.toString()
