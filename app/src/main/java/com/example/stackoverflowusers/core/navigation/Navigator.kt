@@ -4,10 +4,12 @@ import androidx.fragment.app.FragmentActivity
 import com.example.stackoverflowusers.R
 import com.example.stackoverflowusers.feature.user.UserDetailFragment
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class Navigator @Inject constructor(private val fragmentActivity: FragmentActivity) {
+@Singleton
+class Navigator @Inject constructor() {
 
-    fun startPostDetailFragment() {
+    fun startPostDetailFragment(fragmentActivity: FragmentActivity) {
         // Create fragment and give it an argument specifying the article it should show
         val postDetailFragment = UserDetailFragment()
         val transaction = fragmentActivity.supportFragmentManager.beginTransaction().apply {

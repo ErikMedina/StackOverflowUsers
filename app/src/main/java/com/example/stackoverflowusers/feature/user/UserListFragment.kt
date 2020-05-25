@@ -1,11 +1,11 @@
 package com.example.stackoverflowusers.feature.user
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,20 +26,24 @@ import javax.inject.Inject
 class UserListFragment : BaseFragment() {
 
     @Inject
-    lateinit var fragmentActivity: FragmentActivity
-    @Inject
     lateinit var adapter: UserAdapter
+
     @Inject
     lateinit var navigator: Navigator
 
     private lateinit var viewModel: UserViewModel
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        (activity as MainActivity).presentationComponent.inject(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getPresentationComponent().inject(this)
 
         // Shared ViewModel between Activity and Fragments
-        viewModel = ViewModelProviders.of(fragmentActivity).get(UserViewModel::class.java)
+        viewModel = ViewModelProviders.of(requireActivity()).get(UserViewModel::class.java)
         viewModel.result.observe(this,
             Observer<Result> { result -> processResponse(result) })
     }
@@ -56,10 +60,10 @@ class UserListFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recycler.adapter = adapter
-        recycler.layoutManager = LinearLayoutManager(fragmentActivity)
+        recycler.layoutManager = LinearLayoutManager(requireActivity())
         adapter.userListener = {
             viewModel.user = it
-        navigator.startPostDetailFragment()
+            navigator.startPostDetailFragment(requireActivity())
         }
 
         viewModel.getUsers()

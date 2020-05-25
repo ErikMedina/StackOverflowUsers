@@ -1,10 +1,10 @@
 package com.example.stackoverflowusers.feature.user
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import com.example.stackoverflowusers.BaseFragment
 import com.example.stackoverflowusers.R
@@ -15,18 +15,21 @@ import javax.inject.Inject
 class UserDetailFragment : BaseFragment() {
 
     @Inject
-    lateinit var fragmentActivity: FragmentActivity
-    @Inject
     lateinit var imageLoader: ImageLoader
 
     private lateinit var viewModel: UserViewModel
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        (activity as MainActivity).presentationComponent.inject(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getPresentationComponent().inject(this)
 
         // Shared ViewModel between Activity and Fragments
-        viewModel = ViewModelProviders.of(fragmentActivity).get(UserViewModel::class.java)
+        viewModel = ViewModelProviders.of(requireActivity()).get(UserViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -44,7 +47,7 @@ class UserDetailFragment : BaseFragment() {
 
     private fun processUser() {
         viewModel.user?.run {
-            imageLoader.loadThumbnail(ivProfile, profileImage)
+            imageLoader.loadThumbnail(requireContext(), ivProfile, profileImage)
             tvName.text = displayName
             tvUserId.text = userId.toString()
             tvReputation.text = reputation.toString()
