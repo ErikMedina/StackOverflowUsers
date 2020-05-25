@@ -1,8 +1,8 @@
 package com.example.stackoverflowusers
 
 import android.app.Application
-import com.example.stackoverflowusers.core.di.application.ApplicationComponent
-import com.example.stackoverflowusers.core.di.application.DaggerApplicationComponent
+import com.example.stackoverflowusers.core.di.component.ApplicationComponent
+import com.example.stackoverflowusers.core.di.component.DaggerApplicationComponent
 
 class MyApp : Application() {
 
@@ -10,10 +10,5 @@ class MyApp : Application() {
         DaggerApplicationComponent
             .factory()
             .create(this)
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-//        applicationComponent.inject(this) TODO: is it still necessary?
     }
 }

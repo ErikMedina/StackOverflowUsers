@@ -1,4 +1,4 @@
-package com.example.stackoverflowusers.core.di
+package com.example.stackoverflowusers.core.di.scope
 
 import javax.inject.Scope
 

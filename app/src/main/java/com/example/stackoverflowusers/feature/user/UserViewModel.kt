@@ -2,7 +2,7 @@ package com.example.stackoverflowusers.feature.user
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.stackoverflowusers.core.di.ActivityScope
+import com.example.stackoverflowusers.core.di.scope.ActivityScope
 import com.example.stackoverflowusers.core.local.model.User
 import com.example.stackoverflowusers.core.usecase.GetUsersLocallyUseCase
 import com.example.stackoverflowusers.core.usecase.GetUsersUseCase

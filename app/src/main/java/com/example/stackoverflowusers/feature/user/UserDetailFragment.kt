@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import com.example.stackoverflowusers.BaseFragment
 import com.example.stackoverflowusers.R
@@ -14,9 +13,6 @@ import kotlinx.android.synthetic.main.fragment_user_detail.*
 import javax.inject.Inject
 
 class UserDetailFragment : BaseFragment() {
-
-//    @Inject TODO: let's see if we can inject FragmentActivity
-//    lateinit var fragmentActivity: FragmentActivity
 
     @Inject
     lateinit var imageLoader: ImageLoader
@@ -27,7 +23,6 @@ class UserDetailFragment : BaseFragment() {
         super.onAttach(context)
 
         (activity as MainActivity).presentationComponent.inject(this)
-//        getPresentationComponent().inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

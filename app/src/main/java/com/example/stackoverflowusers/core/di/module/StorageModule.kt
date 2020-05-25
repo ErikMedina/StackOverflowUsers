@@ -1,4 +1,4 @@
-package com.example.stackoverflowusers.core.di
+package com.example.stackoverflowusers.core.di.module
 
 import com.example.stackoverflowusers.core.local.Storage
 import com.example.stackoverflowusers.core.local.persistence.PreferencesStorage

@@ -1,8 +1,6 @@
 package com.example.stackoverflowusers
 
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.stackoverflowusers.core.di.BaseComponent
 
 /**
  * Activity declared as open so other activities can inherit from it
@@ -11,23 +9,5 @@ import com.example.stackoverflowusers.core.di.BaseComponent
  */
 open class BaseActivity : AppCompatActivity() {
 
-    private var isInjectorUsed: Boolean = false
-    lateinit var baseComponent: BaseComponent
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        // TODO: I might need a component which contains dependencies common to all activities
-        baseComponent = (application as MyApp).applicationComponent.baseComponent().create(this)
-        super.onCreate(savedInstanceState)
-    }
-
-    //    @UiThread
-//    protected fun getPresentationComponent(): PresentationComponent {
-//        if (isInjectorUsed) {
-//            throw RuntimeException("there is no need to use injector more than once")
-//        }
-//        isInjectorUsed = true
-//        return getApplicationComponent().newPresentationComponent(PresentationModule(this))
-//    }
-
-    private fun getApplicationComponent() = (application as MyApp).applicationComponent
+    fun getApplicationComponent() = (application as MyApp).applicationComponent
 }

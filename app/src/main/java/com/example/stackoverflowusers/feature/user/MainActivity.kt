@@ -5,7 +5,7 @@ import android.widget.FrameLayout
 import androidx.lifecycle.ViewModelProviders
 import com.example.stackoverflowusers.BaseActivity
 import com.example.stackoverflowusers.R
-import com.example.stackoverflowusers.core.di.presentation.PresentationComponent
+import com.example.stackoverflowusers.core.di.component.PresentationComponent
 import com.example.stackoverflowusers.core.viewmodel.ViewModelFactory
 import javax.inject.Inject
 
@@ -18,12 +18,11 @@ class MainActivity : BaseActivity() {
     private lateinit var viewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        presentationComponent = baseComponent.presentationComponent().create()
+        presentationComponent = getApplicationComponent().presentationComponent().create()
         presentationComponent.inject(this)
 
-        // Injects this activity to the just created registration component
-//        getPresentationComponent().inject(this)
+        super.onCreate(savedInstanceState)
+
         // The ViewModel is initialised in the parent (activity) but will be shared by the children
         // as well. That's one of the beauty of the ViewModel, share data among an activity and its
         // children (fragments)

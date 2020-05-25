@@ -1,4 +1,4 @@
-package com.example.stackoverflowusers.core.di.application
+package com.example.stackoverflowusers.core.di.module
 
 import com.example.stackoverflowusers.core.remote.network.ApiRest
 import com.example.stackoverflowusers.core.remote.network.Retrofit

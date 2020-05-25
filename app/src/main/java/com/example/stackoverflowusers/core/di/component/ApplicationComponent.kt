@@ -1,10 +1,9 @@
-package com.example.stackoverflowusers.core.di.application
+package com.example.stackoverflowusers.core.di.component
 
 import android.content.Context
-import com.example.stackoverflowusers.MyApp
-import com.example.stackoverflowusers.core.di.ApplicationSubcomponents
-import com.example.stackoverflowusers.core.di.BaseComponent
-import com.example.stackoverflowusers.core.di.StorageModule
+import com.example.stackoverflowusers.core.di.module.ApplicationModule
+import com.example.stackoverflowusers.core.di.module.ApplicationSubcomponentsModule
+import com.example.stackoverflowusers.core.di.module.StorageModule
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -15,7 +14,7 @@ import javax.inject.Singleton
  * with @Singleton are scoped to its lifetime (app's lifecycle).
  */
 @Singleton
-@Component(modules = [ApplicationModule::class, StorageModule::class, ApplicationSubcomponents::class])
+@Component(modules = [ApplicationModule::class, StorageModule::class, ApplicationSubcomponentsModule::class])
 interface ApplicationComponent {
 
     // Factory to create instances of the AppComponent
@@ -25,8 +24,6 @@ interface ApplicationComponent {
         fun create(@BindsInstance applicationContext: Context): ApplicationComponent
     }
 
-    fun inject(myApp: MyApp)
-
     /**
      * This is a factory function which returns the subcomponent PresentationComponent
      *
@@ -35,7 +32,5 @@ interface ApplicationComponent {
      *
      * Then, this function ties the relationship between PresentationComponent and MyAppComponent.
      */
-//    fun newPresentationComponent(presentationModule: PresentationModule): PresentationComponent
-
-    fun baseComponent(): BaseComponent.Factory
+    fun presentationComponent(): PresentationComponent.Factory
 }

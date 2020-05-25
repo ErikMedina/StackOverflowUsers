@@ -40,7 +40,6 @@ class UserListFragment : BaseFragment() {
         super.onAttach(context)
 
         (activity as MainActivity).presentationComponent.inject(this)
-//        getPresentationComponent().inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
