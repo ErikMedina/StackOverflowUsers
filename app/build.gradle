@@ -36,14 +36,6 @@ dependencies {
     // Extensions such as ViewModelProviders
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    // Dagger
-    // Note: I'm not going to use dagger-android since I don't think it contributes with a real
-    // value to a project but adds another layer of complexity. Also, new features won't be
-    // added to dagger-android (probably deprecated in a near future). Take a look to:
-    // https://twitter.com/manuelvicnt/status/1188861226530607106
-    api "com.google.dagger:dagger:$dagger_version"
-    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
     // Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
