@@ -2,7 +2,6 @@ package com.example.stackoverflowusers.feature.user
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.stackoverflowusers.core.di.scope.ActivityScope
 import com.example.stackoverflowusers.core.local.model.User
 import com.example.stackoverflowusers.core.usecase.GetUsersLocallyUseCase
 import com.example.stackoverflowusers.core.usecase.GetUsersUseCase
@@ -10,12 +9,13 @@ import com.example.stackoverflowusers.core.usecase.PersistUsersUseCase
 import com.example.stackoverflowusers.core.viewmodel.Error
 import com.example.stackoverflowusers.core.viewmodel.Result
 import com.example.stackoverflowusers.core.viewmodel.Status
+import dagger.hilt.android.scopes.ActivityScoped
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-@ActivityScope
+@ActivityScoped
 class UserViewModel @Inject constructor(
     private val getUsersUseCase: GetUsersUseCase,
     private val persistUsersUseCase: PersistUsersUseCase,

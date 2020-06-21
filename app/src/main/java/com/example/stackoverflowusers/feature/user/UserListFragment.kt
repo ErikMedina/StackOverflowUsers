@@ -35,12 +35,6 @@ class UserListFragment : BaseFragment() {
 
     private lateinit var viewModel: UserViewModel
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        (activity as MainActivity).presentationComponent.inject(this)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

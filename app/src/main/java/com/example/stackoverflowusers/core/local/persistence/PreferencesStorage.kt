@@ -7,12 +7,13 @@ import com.example.stackoverflowusers.core.local.Storage
 import com.example.stackoverflowusers.core.local.model.User
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class PreferencesStorage @Inject constructor(
-    applicationContext: Context,
+    @ApplicationContext context: Context,
     private val gson: Gson
 ) : Storage {
 
@@ -21,7 +22,7 @@ class PreferencesStorage @Inject constructor(
 
     init {
         this.preferences =
-            applicationContext.getSharedPreferences(PREFERENCES_NAME, Activity.MODE_PRIVATE)
+            context.getSharedPreferences(PREFERENCES_NAME, Activity.MODE_PRIVATE)
         this.editor = preferences.edit()
     }
 

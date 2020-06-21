@@ -1,6 +1,5 @@
 package com.example.stackoverflowusers.feature.user
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,12 +19,6 @@ class UserDetailFragment : BaseFragment() {
     lateinit var imageLoader: ImageLoader
 
     private lateinit var viewModel: UserViewModel
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        (activity as MainActivity).presentationComponent.inject(this)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

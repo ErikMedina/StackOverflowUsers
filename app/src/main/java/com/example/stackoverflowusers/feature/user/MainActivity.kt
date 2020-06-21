@@ -5,7 +5,6 @@ import android.widget.FrameLayout
 import androidx.lifecycle.ViewModelProviders
 import com.example.stackoverflowusers.BaseActivity
 import com.example.stackoverflowusers.R
-import com.example.stackoverflowusers.core.di.component.PresentationComponent
 import com.example.stackoverflowusers.core.viewmodel.ViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -16,13 +15,9 @@ class MainActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    lateinit var presentationComponent: PresentationComponent
     private lateinit var viewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        presentationComponent = getApplicationComponent().presentationComponent().create()
-        presentationComponent.inject(this)
-
         super.onCreate(savedInstanceState)
 
         // The ViewModel is initialised in the parent (activity) but will be shared by the children
