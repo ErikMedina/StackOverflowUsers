@@ -20,9 +20,11 @@ import com.example.stackoverflowusers.core.viewmodel.Result
 import com.example.stackoverflowusers.core.viewmodel.Status
 import com.example.stackoverflowusers.feature.user.adapter.UserAdapter
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_list.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class UserListFragment : BaseFragment() {
 
     @Inject

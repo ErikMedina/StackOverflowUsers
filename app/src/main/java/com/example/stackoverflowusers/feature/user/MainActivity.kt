@@ -7,8 +7,10 @@ import com.example.stackoverflowusers.BaseActivity
 import com.example.stackoverflowusers.R
 import com.example.stackoverflowusers.core.di.component.PresentationComponent
 import com.example.stackoverflowusers.core.viewmodel.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
     @Inject

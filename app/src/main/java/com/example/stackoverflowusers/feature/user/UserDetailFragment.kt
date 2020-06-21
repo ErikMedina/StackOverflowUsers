@@ -9,9 +9,11 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.stackoverflowusers.BaseFragment
 import com.example.stackoverflowusers.R
 import com.example.stackoverflowusers.core.image.ImageLoader
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_user_detail.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class UserDetailFragment : BaseFragment() {
 
     @Inject
