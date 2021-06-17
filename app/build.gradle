@@ -26,6 +26,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
 }
 
 dependencies {
@@ -66,7 +70,27 @@ dependencies {
     // 'mockito-inline' artifact demanded by Kotlin
     testImplementation 'org.mockito:mockito-core:2.28.2'
     testImplementation 'org.mockito:mockito-inline:2.13.0'
+    testImplementation "org.mockito.kotlin:mockito-kotlin:3.1.0"
+
+    //MockK
+    testImplementation "io.mockk:mockk:1.11.0"
+
+
+
+
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+}
+
+// TODO: remove this workaround for @Generated does not exist https://github.com/google/dagger/issues/1449
+if (project.hasProperty('kapt')) {
+    // Reference for 'kapt' DSL: https://kotlinlang.org/docs/reference/kapt.html#java-compiler-options
+    kapt {
+        // we expect this closure to run over a org.jetbrains.kotlin.gradle.plugin.KaptExtension
+        javacOptions {
+            option("-source", "8")
+            option("-target", "8")
+        }
+    }
 }
