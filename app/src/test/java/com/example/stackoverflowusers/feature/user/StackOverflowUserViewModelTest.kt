@@ -11,8 +11,9 @@ import com.example.stackoverflowusers.core.viewmodel.Error
 import com.example.stackoverflowusers.core.viewmodel.Result
 import com.example.stackoverflowusers.core.viewmodel.Status
 import io.mockk.Called
+import io.mockk.MockKAnnotations
 import io.mockk.every
-import io.mockk.mockk
+import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -22,7 +23,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class UserViewModelTest {
+class StackOverflowUserViewModelTest {
 
     @Rule
     @JvmField
@@ -32,19 +33,24 @@ class UserViewModelTest {
     @JvmField
     var testSchedulerRule = RxImmediateSchedulerRule()
 
-    private val observer: Observer<Result> = mockk()
+    @MockK
+    private lateinit var observer: Observer<Result>
 
-    private val getUsersUseCase: GetUsersUseCase = mockk()
+    @MockK
+    private lateinit var getUsersUseCase: GetUsersUseCase
 
-    private val persistUsersUseCase: PersistUsersUseCase = mockk(relaxUnitFun = true)
+    @MockK(relaxUnitFun = true)
+    private lateinit var persistUsersUseCase: PersistUsersUseCase
 
-    private val getUsersLocallyUseCase: GetUsersLocallyUseCase = mockk()
+    @MockK
+    private lateinit var getUsersLocallyUseCase: GetUsersLocallyUseCase
 
-    private val sut = UserViewModel(getUsersUseCase, persistUsersUseCase, getUsersLocallyUseCase)
+    private lateinit var sut: UserViewModel
 
     @Before
     fun setUp() {
-//        clearAllMocks()
+        MockKAnnotations.init(this)
+        sut = UserViewModel(getUsersUseCase, persistUsersUseCase, getUsersLocallyUseCase)
     }
 
     @Test

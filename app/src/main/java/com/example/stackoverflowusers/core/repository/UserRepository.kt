@@ -5,9 +5,7 @@ import com.example.stackoverflowusers.core.local.model.User
 import com.example.stackoverflowusers.core.remote.network.ApiRest
 import io.reactivex.Single
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class UserRepository @Inject constructor(
     private val apiRest: ApiRest,
     private val preferencesStorage: Storage
@@ -16,11 +14,7 @@ class UserRepository @Inject constructor(
     fun getUsers(): Single<List<User>> {
         return apiRest.getStackOverflowResponse()
             .map { stackOverflowResponse ->
-                val users = mutableListOf<User>()
-                for (userEntity in stackOverflowResponse.userEntities) {
-                    users.add(userEntity.toUser())
-                }
-                users
+                stackOverflowResponse.userEntities.map { it.mapToUser() }
             }
     }
 

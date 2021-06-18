@@ -70,5 +70,5 @@ data class UserEntity(
     var displayName: String = "N/A"
 ) {
 
-    fun toUser() = User(userId, displayName, profileImage, reputation)
+    fun mapToUser() = User(userId, displayName, profileImage, reputation)
 }
