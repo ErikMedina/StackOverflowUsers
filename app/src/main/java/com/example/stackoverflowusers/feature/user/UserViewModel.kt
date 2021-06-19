@@ -10,9 +10,9 @@ import com.example.stackoverflowusers.core.usecase.PersistUsersUseCase
 import com.example.stackoverflowusers.core.viewmodel.Error
 import com.example.stackoverflowusers.core.viewmodel.Result
 import com.example.stackoverflowusers.core.viewmodel.Status
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 @ActivityScope

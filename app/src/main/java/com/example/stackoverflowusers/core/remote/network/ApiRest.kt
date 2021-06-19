@@ -1,7 +1,7 @@
 package com.example.stackoverflowusers.core.remote.network
 
 import com.example.stackoverflowusers.core.remote.model.StackOverflowEntity
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 
 /**

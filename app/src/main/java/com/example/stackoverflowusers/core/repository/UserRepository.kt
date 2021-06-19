@@ -3,7 +3,7 @@ package com.example.stackoverflowusers.core.repository
 import com.example.stackoverflowusers.core.local.Storage
 import com.example.stackoverflowusers.core.local.model.User
 import com.example.stackoverflowusers.core.remote.network.ApiRest
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
