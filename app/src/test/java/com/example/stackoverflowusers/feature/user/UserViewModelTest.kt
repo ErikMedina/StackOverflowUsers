@@ -4,18 +4,14 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.stackoverflowusers.RxImmediateSchedulerRule
 import com.example.stackoverflowusers.core.local.model.User
-import com.example.stackoverflowusers.core.usecase.GetUsersLocallyUseCase
 import com.example.stackoverflowusers.core.usecase.GetUsersUseCase
-import com.example.stackoverflowusers.core.usecase.PersistUsersUseCase
 import com.example.stackoverflowusers.core.viewmodel.Error
 import com.example.stackoverflowusers.core.viewmodel.Result
 import com.example.stackoverflowusers.core.viewmodel.Status
-import io.mockk.Called
+import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
@@ -36,22 +32,17 @@ class UserViewModelTest {
 
     private val getUsersUseCase: GetUsersUseCase = mockk()
 
-    private val persistUsersUseCase: PersistUsersUseCase = mockk(relaxUnitFun = true)
-
-    private val getUsersLocallyUseCase: GetUsersLocallyUseCase = mockk()
-
-    private val sut = UserViewModel(getUsersUseCase, persistUsersUseCase, getUsersLocallyUseCase)
+    private val sut = UserViewModel(getUsersUseCase)
 
     @Before
     fun setUp() {
-//        clearAllMocks()
+        clearAllMocks()
     }
 
     @Test
     fun `Users are fetched successfully`() {
         // Arrange
-        every { getUsersUseCase.execute() } returns Single.error(Throwable())
-        every { getUsersLocallyUseCase.execute() } returns Single.just(users)
+        every { getUsersUseCase.execute() } returns Single.just(users)
         // Act
         sut.getUsers()
         // Assert
@@ -61,16 +52,6 @@ class UserViewModelTest {
             assertThat(data[1], `is`(user2))
             assertThat(data[2], `is`(user3))
         }
-    }
-
-    @Test
-    fun `getUsers when no error then zero interactions with retrieveUsersUseCase`() {
-        // Arrange
-        every { getUsersUseCase.execute() } returns getUsersSingle()
-        // Act
-        sut.getUsers()
-        // Assert
-        verify { getUsersLocallyUseCase wasNot Called }
     }
 
     @Test
@@ -84,12 +65,6 @@ class UserViewModelTest {
             assertThat(status, `is`(Status.ERROR))
             assertThat(error!!.type, `is`(Error.Type.NO_USERS))
         }
-    }
-
-    private fun getUsersSingle(): Single<List<User>> {
-
-
-        return Single.fromObservable(Observable.just(users))
     }
 
     private val user1 = User(USER_ID_1, NAME_1, PROFILE_IMAGE_1, REPUTATION_1)

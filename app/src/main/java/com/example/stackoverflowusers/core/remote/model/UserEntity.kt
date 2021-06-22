@@ -10,58 +10,58 @@ import com.google.gson.annotations.SerializedName
 data class UserEntity(
     @SerializedName("account_id")
     @Expose
-    var accountId: Int,
+    var accountId: Int? = null,
     @SerializedName("is_employee")
     @Expose
-    var isEmployee: Boolean,
+    var isEmployee: Boolean? = null,
     @SerializedName("last_modified_date")
     @Expose
-    var lastModifiedDate: Int,
+    var lastModifiedDate: Int? = null,
     @SerializedName("last_access_date")
     @Expose
-    var lastAccessDate: Int,
+    var lastAccessDate: Int? = null,
     @SerializedName("age")
     @Expose
-    var age: Int,
+    var age: Int? = null,
     @SerializedName("reputation_change_year")
     @Expose
-    var reputationChangeYear: Int,
+    var reputationChangeYear: Int? = null,
     @SerializedName("reputation_change_quarter")
     @Expose
-    var reputationChangeQuarter: Int,
+    var reputationChangeQuarter: Int? = null,
     @SerializedName("reputation_change_month")
     @Expose
-    var reputationChangeMonth: Int,
+    var reputationChangeMonth: Int? = null,
     @SerializedName("reputation_change_week")
     @Expose
-    var reputationChangeWeek: Int,
+    var reputationChangeWeek: Int? = null,
     @SerializedName("reputation_change_day")
     @Expose
-    var reputationChangeDay: Int,
+    var reputationChangeDay: Int? = null,
     @SerializedName("reputation")
     @Expose
     var reputation: Int,
     @SerializedName("creation_date")
     @Expose
-    var creationDate: Int,
+    var creationDate: Int? = null,
     @SerializedName("user_type")
     @Expose
-    var userType: String,
+    var userType: String? = null,
     @SerializedName("user_id")
     @Expose
     var userId: Int,
     @SerializedName("accept_rate")
     @Expose
-    var acceptRate: Int,
+    var acceptRate: Int? = null,
     @SerializedName("location")
     @Expose
-    var location: String,
+    var location: String? = null,
     @SerializedName("website_url")
     @Expose
-    var websiteUrl: String,
+    var websiteUrl: String? = null,
     @SerializedName("link")
     @Expose
-    var link: String,
+    var link: String? = null,
     @SerializedName("profile_image")
     @Expose
     var profileImage: String = "N/A",

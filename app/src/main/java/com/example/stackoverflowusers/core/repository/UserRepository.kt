@@ -14,20 +14,18 @@ class UserRepository @Inject constructor(
     fun getUsers(): Single<List<User>> {
         return apiRest.getStackOverflowResponse()
             .map { stackOverflowResponse ->
-                stackOverflowResponse.userEntities.map { it.mapToUser() }
-            }
+                val users = stackOverflowResponse.userEntities.map { it.mapToUser() }
+                persistUsers(users)
+                users
+            }.onErrorResumeNext { retrieveUsers() }
     }
 
-    fun persistUsers(users: List<User>) {
+    private fun persistUsers(users: List<User>) {
         preferencesStorage.persistUsers(users)
     }
 
-    fun getUsersLocally(): Single<List<User>> {// TODO: get users locally should be handle by the repository
-        val users = preferencesStorage.getUsers()
-        return if (users == null) {
-            Single.error(Throwable())
-        } else {
-            Single.just(users)
-        }
+    private fun retrieveUsers(): Single<List<User>> {
+        val users = preferencesStorage.retrieveUsers()
+        return Single.just(users)
     }
 }
