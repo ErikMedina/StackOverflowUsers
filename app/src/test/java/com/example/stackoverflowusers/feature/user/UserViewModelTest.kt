@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.stackoverflowusers.RxImmediateSchedulerRule
 import com.example.stackoverflowusers.core.local.model.User
-import com.example.stackoverflowusers.core.usecase.GetUsersUseCase
+import com.example.stackoverflowusers.core.repository.UserRepository
 import com.example.stackoverflowusers.core.viewmodel.Error
 import com.example.stackoverflowusers.core.viewmodel.Result
 import com.example.stackoverflowusers.core.viewmodel.Status
@@ -30,9 +30,9 @@ class UserViewModelTest {
 
     private val observer: Observer<Result> = mockk()
 
-    private val getUsersUseCase: GetUsersUseCase = mockk()
+    private val userRepository: UserRepository = mockk()
 
-    private val sut = UserViewModel(getUsersUseCase)
+    private val sut = UserViewModel(userRepository)
 
     @Before
     fun setUp() {
@@ -42,7 +42,7 @@ class UserViewModelTest {
     @Test
     fun `Users are fetched successfully`() {
         // Arrange
-        every { getUsersUseCase.execute() } returns Single.just(users)
+        every { userRepository.getUsers() } returns Single.just(users)
         // Act
         sut.getUsers()
         // Assert
@@ -57,7 +57,7 @@ class UserViewModelTest {
     @Test
     fun `getUsers when error then status is Error with no users`() {
         // Arrange
-        every { getUsersUseCase.execute() } returns Single.error(Throwable())
+        every { userRepository.getUsers() } returns Single.error(Throwable())
         // Act
         sut.getUsers()
         // Assert

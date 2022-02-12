@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.stackoverflowusers.core.di.scope.ActivityScope
 import com.example.stackoverflowusers.core.local.model.User
-import com.example.stackoverflowusers.core.usecase.GetUsersUseCase
+import com.example.stackoverflowusers.core.repository.UserRepository
 import com.example.stackoverflowusers.core.viewmodel.Error
 import com.example.stackoverflowusers.core.viewmodel.Result
 import com.example.stackoverflowusers.core.viewmodel.Status
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @ActivityScope
 class UserViewModel @Inject constructor(
-    private val getUsersUseCase: GetUsersUseCase
+    private val userRepository: UserRepository,
 ) : ViewModel() {
 
     var user: User? = null
@@ -25,7 +25,7 @@ class UserViewModel @Inject constructor(
     private val disposables = CompositeDisposable()
 
     fun getUsers() {
-        disposables.add(getUsersUseCase.execute()
+        disposables.add(userRepository.getUsers()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { result.value = Result(status = Status.LOADING) }
