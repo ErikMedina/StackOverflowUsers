@@ -79,14 +79,3 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
 
-// TODO: remove this workaround for @Generated does not exist https://github.com/google/dagger/issues/1449
-if (project.hasProperty('kapt')) {
-    // Reference for 'kapt' DSL: https://kotlinlang.org/docs/reference/kapt.html#java-compiler-options
-    kapt {
-        // we expect this closure to run over a org.jetbrains.kotlin.gradle.plugin.KaptExtension
-        javacOptions {
-            option("-source", "8")
-            option("-target", "8")
-        }
-    }
-}
