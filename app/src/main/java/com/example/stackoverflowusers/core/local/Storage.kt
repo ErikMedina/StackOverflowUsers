@@ -4,6 +4,6 @@ import com.example.stackoverflowusers.core.local.model.User
 
 interface Storage {
 
-    fun getUsers(): List<User>
+    fun retrieveUsers(): List<User>
     fun persistUsers(users: List<User>)
 }
